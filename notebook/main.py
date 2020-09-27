@@ -12,10 +12,22 @@ class MyWidget(QMainWindow):
         # Обратите внимание: имя элемента такое же как в QTDesigner
 
     def run(self):
+        self.error_label.setText("")
         name = self.name.text()
         tel = self.tel.text()
-        prev_text = f"{name} {tel}"
-        self.output.addItem(prev_text)
+        try:
+            if name and tel:
+                a = int(tel)
+                prev_text = f"{name} {tel}"
+                self.output.addItem(prev_text)
+            else:
+                self.error_label.setText("Ошибка: заполните все поля")
+                self.name.setText("")
+                self.tel.setText("")
+        except Exception as ex:
+            self.error_label.setText("Ошибка: номер должен содержать только цифры")
+            self.name.setText("")
+            self.tel.setText("")
 
 
 if __name__ == '__main__':
